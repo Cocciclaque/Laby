@@ -28,6 +28,8 @@ show_pos = False
 keys= { "UP":0 , "DOWN":0, "LEFT":0, "RIGHT":0 }
 
 player_pos = pygame.Vector2(round(size[0]/8), round(size[1]/2))
+lastvalidplayerpos = [player_pos.x, player_pos.y]
+
 map = Labyrinthe(size[0], size[1], "laby-01.csv", screen, tilesize)
 
 map.affiche()
@@ -77,6 +79,9 @@ while running:
     next_move += dt
     # gestion des déplacements
     if next_move>0:
+        lastvalidplayerpos[0] = player_pos.x
+        lastvalidplayerpos[1] = player_pos.y
+        print(lastvalidplayerpos, player_pos)
         if keys['UP'] == 1:
             player_pos.y -= 1
             next_move = -player_speed
@@ -89,6 +94,7 @@ while running:
         elif keys['RIGHT'] == 1:
             player_pos.x += 1
             next_move = -player_speed
+        print(lastvalidplayerpos, player_pos)
 
         # vérification du déplacement du joueur
         if player_pos.y < 0:
@@ -99,7 +105,9 @@ while running:
             player_pos.x = 0
         if player_pos.x > size[0]-1:
             player_pos.x = size[0]-1
-
+        if map.getXY(int(player_pos.x), int(player_pos.y)) == "1":
+            player_pos.x = lastvalidplayerpos[0]
+            player_pos.y = lastvalidplayerpos[1]
         if show_pos:
             print("pos: ",player_pos)
 
