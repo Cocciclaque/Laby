@@ -28,6 +28,8 @@ class Labyrinthe :
             for j in range(len(self.matrice[i])):
                 if self.matrice[i][j] == "1":
                     pygame.draw.rect(self.s, "red", pygame.Rect(j*self.t, i*self.t, self.t, self.t))
+                if self.matrice[i][j] == "-1":
+                    pygame.draw.rect(self.s, "blue", pygame.Rect(j*self.t, i*self.t, self.t, self.t))
 
     def get_matrice(self):
         """renvoie la matrice associée au labyrinthe"""
